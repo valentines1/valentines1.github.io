@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Will You Be My Valentine?</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .hidden {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease-in-out;
+    }
+    .visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    button:hover {
+      transform: scale(1.05);
+      transition: transform 0.2s ease-in-out;
+    }
+  </style>
+</head>
+<body class="bg-pink-100 flex items-center justify-center min-h-screen" style="background-image: url('https://www.transparenttextures.com/patterns/heart-pattern.png'); background-size: cover;">
+  <!-- Add Name UI -->
+  <div id="name-prompt" class="step-section text-center space-y-6 visible">
+    <h1 class="text-4xl font-bold text-pink-600">Welcome!</h1>
+    <p class="text-xl text-gray-700">What's your Valentine’s name?</p>
+    <input
+      type="text"
+      id="name-input"
+      placeholder="Enter their name"
+      class="w-64 p-3 rounded-lg border-2 border-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-500"
+    />
+    <button
+      onclick="setName()"
+      class="ml-4 bg-pink-500 hover:bg-pink-600 text-white py-3 px-6 rounded-lg text-lg font-semibold"
+    >
+      Submit
+    </button>
+  </div>
+
+  <!-- Landing Page -->
+  <div id="landing-page" class="step-section hidden text-center space-y-6">
+    <h1 class="text-4xl font-bold text-pink-600">Hey <span id="recipient-name">[Their Name]</span>!</h1>
+    <p class="text-xl text-gray-700">I've got something special for you...</p>
+    <button
+      onclick="showQuestion(1)"
+      class="bg-pink-500 hover:bg-pink-600 text-white py-3 px-6 rounded-lg text-lg font-semibold"
+    >
+      Click to Begin
+    </button>
+  </div>
+  
+  <div id="question-1" class="step-section w-full hidden flex items-center justify-center min-h-screen" style="background-image: url('https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?crop=entropy&fit=crop&w=1080&q=80'); background-size: cover; background-position: center;">
+    <div class="bg-white/80 backdrop-blur-md p-6 rounded-lg max-w-md text-center shadow-lg">
+      <h2 class="text-3xl font-bold text-pink-600 mb-6 animate-fade-in">
+        🌟 Do you know how awesome you are? 🌟
+      </h2>
+      <div class="space-x-4">
+        <button
+          onclick="showQuestion(2)"
+          class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-full text-lg font-semibold transition-transform transform hover:scale-110"
+        >
+          Yes, totally! 😎
+        </button>
+        <button
+          onclick="showQuestion(2)"
+          class="bg-gray-300 hover:bg-gray-400 text-black py-2 px-4 rounded-full text-lg font-semibold transition-transform transform hover:scale-110"
+        >
+          Not sure... 🤔
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <div id="question-2" class="step-section w-full hidden flex items-center justify-center min-h-screen" style="background-image: url('https://images.unsplash.com/photo-1517841905240-472988babdf9?crop=entropy&fit=crop&w=1080&q=80'); background-size: cover; background-position: center;">
+    <div class="bg-white/80 backdrop-blur-md p-6 rounded-lg max-w-md text-center shadow-lg">
+      <h2 class="text-3xl font-bold text-pink-600 mb-6 animate-fade-in">
+        💌 Would you like to hear something special? 💌
+      </h2>
+      <div class="space-x-4">
+        <button
+          onclick="showQuestion(3)"
+          class="bg-pink-500 hover:bg-pink-600 text-white py-2 px-4 rounded-full text-lg font-semibold transition-transform transform hover:scale-110"
+        >
+          Yes, please! 🥰
+        </button>
+        <button
+          onclick="showQuestion(3)"
+          class="bg-gray-300 hover:bg-gray-400 text-black py-2 px-4 rounded-full text-lg font-semibold transition-transform transform hover:scale-110"
+        >
+          Maybe later... 😅
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <div id="question-3" class="step-section w-full hidden flex items-center justify-center min-h-screen" style="background-image: url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?crop=entropy&fit=crop&w=1080&q=80'); background-size: cover; background-position: center;">
+    <div class="bg-white/80 backdrop-blur-md p-6 rounded-lg max-w-md text-center shadow-lg">
+      <h2 class="text-3xl font-bold text-pink-600 mb-6 animate-fade-in">
+        ❤️ Will you be my Valentine, to hear something special? ❤️
+      </h2>
+      <div class="space-x-4">
+        <button
+          onclick="showFinal(true)"
+          class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-full text-lg font-semibold transition-transform transform hover:scale-110"
+        >
+          Absolutely! 💖
+        </button>
+        <button
+          onclick="showFinal(false)"
+          class="bg-gray-300 hover:bg-gray-400 text-black py-2 px-4 rounded-full text-lg font-semibold transition-transform transform hover:scale-110"
+        >
+          Let me think 🤔
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <div id="final-yes" class="step-section hidden flex items-center justify-center min-h-screen">
+    <div class="bg-white/80 backdrop-blur-md p-6 rounded-lg max-w-md text-center shadow-lg">
+      <h2 class="text-2xl font-semibold text-gray-900 mb-4">Yay! You’ve just made my day! ❤</h2>
+      <p class="text-gray-700 text-base mb-4">
+        Looking forward to spending Valentine’s Day with you!
+      </p>
+      <p class="text-gray-700 text-base mb-4">
+        Please share your contact number so I can reach out to you:
+      </p>
+      <div class="space-y-4">
+        <input
+          type="tel"
+          id="phone-number"
+          placeholder="Enter your phone number"
+          class="w-full p-3 rounded-lg border-2 border-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-500"
+        />
+        <button
+          onclick="submitPhoneNumber()"
+          class="bg-pink-500 hover:bg-pink-600 text-white py-2 px-4 rounded-full text-sm font-semibold"
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  
+  <div id="final-no" class="step-section hidden text-center space-y-6">
+    <h2 class="text-4xl font-bold text-pink-600">I’ll be waiting! 😉</h2>
+    <p class="text-xl text-gray-700">Take your time. I'm not going anywhere.</p>
+  </div>
+  
+  <!-- JavaScript -->
+  <script>
+    let userName = ''; // Global variable to store the name
+
+function setName() {
+  const name = document.getElementById('name-input').value.trim();
+  if (name) {
+    userName = name; // Save the name globally
+    document.getElementById('recipient-name').textContent = name;
+    showSection('landing-page');
+  } else {
+    alert('Please enter a name!');
+  }
+}
+
+function submitPhoneNumber() {
+  const phone = document.getElementById('phone-number').value.trim();
+
+  if (!userName || !phone) {
+    alert('Please ensure both name and phone number are provided!');
+    return;
+  }
+
+  // Google Form submission URL
+  const formURL = 'https://docs.google.com/forms/d/e/1FAIpQLScQMjwUEL_uLddB6iOR-2SkHawdAJ4xIa7cmXqOVAqkCJmxIg/formResponse';
+
+  // Form field entry IDs
+  const formData = new FormData();
+  formData.append('entry.401243009', userName); // Name field
+  formData.append('entry.1284085685', phone); // Phone number field
+
+  // Submit data to Google Form
+  fetch(formURL, {
+    method: 'POST',
+    body: formData,
+    mode: 'no-cors', // Avoids CORS issues
+  })
+    .then(() => {
+      alert('Thank you! Your information has been submitted.');
+      document.getElementById('phone-number').value = ''; // Clear phone number input
+    })
+    .catch(error => {
+      alert('An error occurred while submitting your information.');
+      console.error('Error:', error);
+    });
+}
+
+function showQuestion(step) {
+  showSection(`question-${step}`);
+}
+
+function showFinal(isYes) {
+  showSection(isYes ? 'final-yes' : 'final-no');
+}
+
+function showSection(id) {
+  // Hide all sections with the 'step-section' class
+  document.querySelectorAll('.step-section').forEach(div => div.classList.add('hidden'));
+  document.querySelectorAll('.step-section').forEach(div => div.classList.remove('visible'));
+
+  // Show the target section
+  const target = document.getElementById(id);
+  target.classList.remove('hidden');
+  target.classList.add('visible');
+}
+
+  </script>
+</body>
+</html>
